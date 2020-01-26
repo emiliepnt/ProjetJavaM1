@@ -6,11 +6,11 @@
  - Ajout de la dépendance EmailValidator et écriture des règles de vérification des données
  - Implémentation des tests pour les règles de vérification
  
- ### Feature 2: methodes d'anonymisation et tests (Thaïs)
+ ### Feature 2: Méthodes d'anonymisation et tests (Thaïs)
  - Implémentation des méthodes d'anonymisation
  - Implémentation des tests associés
  
- ### Feature 3: Construction des objets utiles au projet (Thaïs)
+ ### Feature 3: Construction des objets utiles au projet et méthode dataBuild (Thaïs)
  - Création de la classe Column (name, type, should, anonym)
  - Création de la classe DataFile: attributs, constructeur, et
  - Implémentation de la méthode dataBuild
