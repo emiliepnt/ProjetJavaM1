@@ -41,5 +41,23 @@ public class AppTest extends TestCase {
 
 	}
 	
+	public void testAnonym() {
+		String str1 = "emilie.peynet@dauphine.eu";
+		String str2 = "Rodolphe";
+		String str3 = "bonjour";
+		String str4 = "jean-eudes.bernard@dauphine.psl.eu";
+		String str7 = "jean.dujardin@gmail.fr";
+		
+		assertTrue(!str1.equals(Anonym.randomLetter(str1)));
+		assertTrue(!str2.equals(Anonym.randomLetter(str2)));
+		assertTrue(!str3.equals(Anonym.randomLetter(str3)));
+		assertTrue(!str4.equals(Anonym.randomLetter(str4)));
+		assertTrue(!str7.equals(Anonym.randomLetter(str7)));
+		
+		assertTrue(!str1.equals(Anonym.localRandomLetter(str1)));
+		assertTrue(!str4.equals(Anonym.localRandomLetter(str4)));
+		assertTrue(!str7.equals(Anonym.localRandomLetter(str7)));
+		
+	}
 	
 }
