@@ -60,4 +60,28 @@ public class AppTest extends TestCase {
 		
 	}
 	
+	public void testBuildData() {
+		DataFile df = new DataFile();
+		
+		df.fileIN = "C:\\Users\\mimim\\Documents\\Dauphine\\M1 MIAGE Alternance\\Java Avancé\\0. Projet Outline\\Outline\\src\\test\\java\\Projet\\Outline\\DataIN.csv";
+		
+		df.descriptionFileName = "C:\\Users\\mimim\\Documents\\Dauphine\\M1 MIAGE Alternance\\Java Avancé\\0. Projet Outline\\Outline\\src\\test\\java\\Projet\\Outline\\Desc.json";
+
+		df.verificationFileName = "C:\\Users\\mimim\\Documents\\Dauphine\\M1 MIAGE Alternance\\Java Avancé\\0. Projet Outline\\Outline\\src\\test\\java\\Projet\\Outline\\Verif.json";
+		df.fileOUTverif = "C:\\Users\\mimim\\Documents\\Dauphine\\M1 MIAGE Alternance\\Java Avancé\\0. Projet Outline\\Outline\\src\\test\\java\\Projet\\Outline\\DataOutVerif.csv";
+		
+		df.anonymisationFileName = "C:\\Users\\mimim\\Documents\\Dauphine\\M1 MIAGE Alternance\\Java Avancé\\0. Projet Outline\\Outline\\src\\test\\java\\Projet\\Outline\\Anonym.json";
+		df.fileOUTanonym = "C:\\Users\\mimim\\Documents\\Dauphine\\M1 MIAGE Alternance\\Java Avancé\\0. Projet Outline\\Outline\\src\\test\\java\\Projet\\Outline\\DataOutAnonym.csv";
+		
+		df.buildDataFile();
+		
+		assertTrue(df.nbCol==5);
+		assertTrue(df.colNames[0].equals("NOM"));
+		assertTrue(df.colNames[1].equals("AGE"));
+		assertTrue(df.colNames[2].equals("DATE_DE_NAISSANCE"));
+		assertTrue(df.colNames[3].equals("EMAIL_PRO"));
+		assertTrue(df.colNames[4].equals("EMAIL_PERSO"));
+		assertTrue(df.nbChanges==3);
+		assertTrue(df.nbRules==3);
+	}
 }

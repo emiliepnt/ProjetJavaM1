@@ -1,0 +1,14 @@
+[ 
+   { 
+      "name":"AGE",
+      "should":["BE_AN_AGE"]
+   },
+   { 
+      "name":"EMAIL_PRO",
+      "should":["BE_AN_EMAIL", "BE_AN_DAUPHINE_EMAIL"]
+   },
+   { 
+      "name":"EMAIL_PERSO",
+      "should":["BE_AN_EMAIL"]
+   }
+]
