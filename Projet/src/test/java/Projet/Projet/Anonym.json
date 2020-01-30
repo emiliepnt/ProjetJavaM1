@@ -1,0 +1,13 @@
+[ 
+   { 
+      "name":"NOM",
+      "changeTo":"RANDOM_LETTER"
+   },    
+   { 
+      "name":"EMAIL_PERSO",
+      "changeTo":"RANDOM_LETTER_FOR_LOCAL_PART"
+   },   
+   { 
+      "name":"AGE"
+    }
+]
