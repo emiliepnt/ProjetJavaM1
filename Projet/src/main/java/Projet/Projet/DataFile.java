@@ -133,4 +133,20 @@ public class DataFile {
 		}
 
 	}
+	
+	void checkNames(String line) throws Exception {
+		if (line.startsWith(UTF8_BOM)) {
+			line = line.substring(1).trim();
+		}
+		String[] names = line.split(this.sep);
+
+		for (int i = 0; i < this.nbCol; i++) {
+			if (!names[i].trim().equals(this.colNames[i].trim())) {
+				System.out.println(
+						"Incohérence entre les noms de colonnes dans le fichier de description et le fichier de données.");
+				System.out.println(names[i] + " vs " + this.colNames[i]);
+				throw new Exception();
+			}
+		}
+	}
 }
