@@ -1,7 +1,12 @@
 package Projet.Projet;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
@@ -146,6 +151,138 @@ public class DataFile {
 						"Incohérence entre les noms de colonnes dans le fichier de description et le fichier de données.");
 				System.out.println(names[i] + " vs " + this.colNames[i]);
 				throw new Exception();
+			}
+		}
+	}
+	
+	void verification() throws Exception {
+		BufferedReader br = null;
+		String line; // ligne du csv
+		String[] dataTemp = new String[this.nbCol]; // données de la ligne splitée selon le séparateur
+		int entryNum = 0; // Compteur de lignes
+		boolean entryOK = true; // Variable enregistrant si une entrée est correcte
+		File dataOUT = new File(this.fileOUTverif);
+		FileWriter fw = new FileWriter(dataOUT);
+		BufferedWriter bw = new BufferedWriter(fw);
+
+		try {
+			br = new BufferedReader(new FileReader(this.fileIN));
+			line = br.readLine();
+
+			this.checkNames(line); // Vérification des entêtes des colonnes (data vs description)
+			bw.write(line);
+			bw.write("\n");
+			entryNum++;
+
+			while ((line = br.readLine()) != null) {
+				dataTemp = line.split(this.sep);
+				entryOK = true;
+				for (int i = 0; i < this.nbCol; i++) {
+
+					// Verification des différentes règles
+					if (this.data.get(this.colNames[i]).should.contains("BE_AN_AGE")) {
+						if (!Regles.ageValid(dataTemp[i], this.data.get(this.colNames[i]).dataType)) {
+							System.out.println("Attention, cet age n'est pas valide: " + dataTemp[i] + " (ligne "
+									+ entryNum + ")");
+							entryOK = false;
+						}
+
+					}
+
+					if (this.data.get(this.colNames[i]).should.contains("BE_AN_EMAIL")) {
+						if (!Regles.emailValid(dataTemp[i])) {
+							System.out.println("Attention, cet email n'est pas valide: " + dataTemp[i] + " (ligne "
+									+ entryNum + ")");
+							entryOK = false;
+						}
+					}
+
+					if (this.data.get(this.colNames[i]).should.contains("BE_AN_DAUPHINE_EMAIL")) {
+						if (!Regles.dauphineEmail(dataTemp[i])) {
+							System.out.println("Attention, cet email n'est pas un mail dauphine valide: " + dataTemp[i]
+									+ " (ligne " + entryNum + ")");
+							entryOK = false;
+						}
+					}
+
+				}
+				if (entryOK) {
+					// Ecriture de la ligne dans le fichier csv
+					bw.write(line);
+					bw.write("\n");
+				}
+				entryNum++;
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+					bw.close();
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	void anonymisation() throws IOException {
+		BufferedReader br = null;
+		String line; // ligne du csv
+		String[] dataTemp = new String[this.nbCol]; // données de la ligne splitée selon le séparateur
+		File dataOUT = new File(this.fileOUTanonym);
+		FileWriter fw = new FileWriter(dataOUT);
+		BufferedWriter bw = new BufferedWriter(fw);
+
+		try {
+			br = new BufferedReader(new FileReader(this.fileIN));
+			line = br.readLine();
+			bw.write(line);
+			bw.write("\n");
+
+			while ((line = br.readLine()) != null) {
+				dataTemp = line.split(this.sep);
+				for (int i = 0; i < this.nbCol; i++) {
+
+					// Verification des différentes règles
+					if (this.data.get(this.colNames[i]).changeTo != null
+							&& this.data.get(this.colNames[i]).changeTo.contains("RANDOM_LETTER_FOR_LOCAL_PART")) {
+						bw.write(Anonym.localRandomLetter(dataTemp[i]));
+					} else if (this.data.get(this.colNames[i]).changeTo != null
+							&& this.data.get(this.colNames[i]).changeTo.contains("RANDOM_LETTER")) {
+						bw.write(Anonym.randomLetter(dataTemp[i]));
+					}
+
+					else if (this.data.get(this.colNames[i]).changeTo != null) {
+						bw.write(dataTemp[i]);
+					}
+
+					if (i == this.nbCol - 1)
+						bw.write("\n");
+					else
+						bw.write(this.sep);
+				}
+
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+					bw.close();
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
