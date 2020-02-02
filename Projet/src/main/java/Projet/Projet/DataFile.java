@@ -12,7 +12,6 @@ import java.util.HashMap;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
-
 public class DataFile {
 	String fileIN;
 	String fileOUTverif;
@@ -45,8 +44,8 @@ public class DataFile {
 	void buildDataFile() {
 
 		String name;
-
 		JsonArray descriptionOBJ;
+		
 		try {
 			descriptionOBJ = new Gson().fromJson(new FileReader(this.descriptionFileName), JsonArray.class);
 
@@ -65,7 +64,7 @@ public class DataFile {
 						.get("dataType") // get the nested 'dataType' JsonElement
 						.getAsString(); // get it as a String
 				this.data.put(name, new Column(name));
-				this.data.get(name).dataType=type;
+				this.data.get(name).dataType = type;
 				this.colNames[i] = name.trim();
 			}
 		} catch (FileNotFoundException e) {
@@ -73,7 +72,7 @@ public class DataFile {
 			e.printStackTrace();
 		}
 
-		if (this.verificationFileName!=null) {
+		if (this.verificationFileName != null) {
 			JsonArray verificationOBJ;
 			try {
 
@@ -105,7 +104,7 @@ public class DataFile {
 
 		}
 
-		if (this.anonymisationFileName!=null) {
+		if (this.anonymisationFileName != null) {
 			JsonArray anonymisationOBJ;
 			try {
 
@@ -127,9 +126,9 @@ public class DataFile {
 								.getAsJsonObject() // get it as a JsonObject
 								.get("changeTo") // get the nested 'changeTo' JsonElement
 								.getAsString(); // get it as a String
-						this.data.get(name).changeTo =chg;
+						this.data.get(name).changeTo = chg;
 					} else
-						this.data.get(name).changeTo="";
+						this.data.get(name).changeTo = "";
 				}
 			} catch (FileNotFoundException e) {
 				System.out.println("Le fichier d'Anonymisation est introuvable.");
@@ -138,7 +137,7 @@ public class DataFile {
 		}
 
 	}
-	
+
 	void checkNames(String line) throws Exception {
 		if (line.startsWith(UTF8_BOM)) {
 			line = line.substring(1).trim();
@@ -154,7 +153,7 @@ public class DataFile {
 			}
 		}
 	}
-	
+
 	void verification() throws Exception {
 		BufferedReader br = null;
 		String line; // ligne du csv
@@ -180,7 +179,8 @@ public class DataFile {
 				for (int i = 0; i < this.nbCol; i++) {
 
 					// Verification des différentes règles
-					if (this.data.get(this.colNames[i]).should.contains("BE_AN_AGE")) {
+					if (this.data.get(this.colNames[i]).should != null
+							&& this.data.get(this.colNames[i]).should.contains("BE_AN_AGE")) {
 						if (!Regles.ageValid(dataTemp[i], this.data.get(this.colNames[i]).dataType)) {
 							System.out.println("Attention, cet age n'est pas valide: " + dataTemp[i] + " (ligne "
 									+ entryNum + ")");
@@ -189,7 +189,8 @@ public class DataFile {
 
 					}
 
-					if (this.data.get(this.colNames[i]).should.contains("BE_AN_EMAIL")) {
+					if (this.data.get(this.colNames[i]).should != null
+							&& this.data.get(this.colNames[i]).should.contains("BE_AN_EMAIL")) {
 						if (!Regles.emailValid(dataTemp[i])) {
 							System.out.println("Attention, cet email n'est pas valide: " + dataTemp[i] + " (ligne "
 									+ entryNum + ")");
@@ -197,7 +198,8 @@ public class DataFile {
 						}
 					}
 
-					if (this.data.get(this.colNames[i]).should.contains("BE_AN_DAUPHINE_EMAIL")) {
+					if (this.data.get(this.colNames[i]).should != null
+							&& this.data.get(this.colNames[i]).should.contains("BE_AN_DAUPHINE_EMAIL")) {
 						if (!Regles.dauphineEmail(dataTemp[i])) {
 							System.out.println("Attention, cet email n'est pas un mail dauphine valide: " + dataTemp[i]
 									+ " (ligne " + entryNum + ")");
