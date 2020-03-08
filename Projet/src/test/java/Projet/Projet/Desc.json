@@ -1,0 +1,22 @@
+[ 
+   { 
+      "name":"NOM",
+      "dataType":"STRING"
+   },
+   { 
+      "name":"AGE",
+      "dataType":"INT"
+   },
+   { 
+      "name":"DATE_DE_NAISSANCE",
+      "dataType":"STRING"
+   },
+   { 
+      "name":"EMAIL_PRO",
+      "dataType":"STRING"
+   },
+   { 
+      "name":"EMAIL_PERSO",
+      "dataType":"STRING"
+   }
+]
