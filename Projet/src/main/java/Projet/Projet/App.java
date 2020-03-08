@@ -43,7 +43,7 @@ public class App
 		if (df.verificationFileName != null)
 			df.verification();
 
-		if (df.anonymisationFileName != null)
+		if (df.anonymisationFileName != null) {
 			if (df.verificationFileName != null) {
 				System.out.println(
 						"Voulez-vous que le fichier qui est à anonymiser soit le fichier obtenu après vérification ? (les entrées erronées auront donc été effacées) Répondre par OUI ou par NON.");
@@ -51,8 +51,9 @@ public class App
 				if (rep.equals("OUI"))
 					df.fileIN = df.fileOUTverif;
 			}
-		df.anonymisation();
-
+			df.anonymisation();
+		}
+		
 		sc.close();
 		System.out.println("Programme exécuté avec succès.");
 
